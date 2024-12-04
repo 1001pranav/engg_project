@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <style type="text/css">
+      #box{
+        margin-top: 11%;
+        height:45%;
+        width: 22%;
+       background-color: lightblue;
+      margin-left: 38%;
+      padding-top: 30px;
+      padding-bottom: 40px;
+      padding-left: 20px;
+      padding-right: 20px;
+
+      }
+#rst{
+  margin-left: 41%;
+}
+
+
+         </style>
+         <script type="text/javascript">
+           function showpass(){
+            var x=document.getElementById('pass');
+            if(x.type==='password') {
+    x.type = "text";
+  } else {
+    x.type = "password";
+  }
+}
+         </script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title>Login</title>
+  </head>
+  <body>
+    {{result|safe}}
+   <div id="box" class="shadow-lg bg-white rounded">
+    <center> <b>Login Page</b> </center>
+     <form method="post" action='/Home'>
+      {% csrf_token %}
+      <label for="name">Username</label>
+      <input type="text" class="form-control " name="name" placeholder="Enter User Email">
+      <label for="name">Password</label>
+      <input type="Password" id="pass" class="form-control " name="password" placeholder="Enter Password">
+      <input type="Checkbox" onclick="showpass()" name="shw">
+      <label for="shw">Show Password</label><br>
+      <label>Parent<input type="radio" name="type" checked  value="Parent"></label>
+      <label>Faculty<input type="radio" name="type" value="Faculty"></label><br/>
+
+      <input type="submit" id="sub"class="btn btn-primary">
+      <input type="reset" id="rst"class="btn btn-warning">
+
+     </form>
+
+   </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  </body>
+</html>

@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Welcome {{name}}</title>
+    <style media="screen">
+      #ast, #ast1, #ia, #max_ia{
+        display : none;
+      }
+    </style>
+    <script type="text/javascript">
+      function showast() {
+        document.getElementById('ast').style.display='block';
+        document.getElementById('ast1').style.display='block';
+      }
+      count=0;
+      function addia(){
+        var node=document.getElementById('marksIA').createElement("DIV")
+
+        count++;
+        html = "<div class="+count+">"
+        html +='<label>Subject Code <input type="text" name="subcode" class="form-control" value=""> </label>'
+        html +='<label>Marks Gained <input type="number" name="mgain" class="form-control"  value=""> </label>'
+        html +='<label>Maximum IA <input type="number"  name="mIA" class="form-control"  value="30"> </label></div>'
+        var textnode = document.createTextNode(html);       
+        node.appendChild(textnode);
+      }
+    </script>
+    <link rel="stylesheet"  type="text/css" href="static/bootstrap/css/bootstrap.min.css" >
+  </head>
+  <body>
+
+  <h2>Welcome Faculty Advisor {{name}}</h2>
+  <nav class="navbar navbar-expand-lg  navbar-dark bg-dark">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <button class="btn nav-link" type="button" name="button">Add Subject</button>
+      </li>
+      <li class="nav-item">
+        <button type="button" onclick="showast()" class="btn nav-link" name="button">Add New Student</button>
+      </li>
+      <li class="nav-item">
+        <button type="button" class="btn nav-link" name="button">Check Parent Response</button>
+      </li>
+      <li class="nav nav-item">
+        <a href="\Dispstd?fid={{fid}}&name={{name}}" class="btn nav-link" >Display all Student</a>
+      </li>
+      <li class="nav nav-item">
+        <a href="\showsub?fid={{fid}}&name={{name}}" class="btn nav-link" >Show Subject</a>
+      </li>
+    </ul>
+    <form class="form-inline my-2 my-lg-0" action="search" method="post">
+      {% csrf_token %}
+      <input type="hidden" name="fid" value="{{fid}}">
+      <input type="hidden" name="fname" value="{{name}}">
+      <input class="form-control mr-sm-2" type="search" name="usn" placeholder="Enter USN" aria-label="Search">
+      <input type="submit" name="type" class='btn btn-outline-success my-2 my-sm-0' value="Search">
+    </form>
+  </nav>
+  <fieldset>
+  <div id='ast'>
+    <form  action="Addstud" method="post">
+      {% csrf_token %}
+      <input type="hidden" name="fid" value="{{fid}}">
+      <input type="hidden" name="fname" value="{{name}}">
+      <legend>New Student Record</legend>
+      <div class="container form-group">
+        <legend>Student details</legend>
+        <div class="row">
+          <div class="col col-4">
+            <label >USN <input type="text" class="form-control" name="usn" value=""></label>
+          </div>
+          <div class="col col-4">
+            <label >Name <input type="text" class="form-control" name="name" value=""></label>
+          </div>
+          <div class="col col-4">
+            <label>Branch <select class="form-control" name="brn"><option>Select</option>
+            <option class="form-control">CIVIL</option>
+            <option class="form-control">CSE</option>
+            <option class="form-control">ECE</option>
+            <option class="form-control">MECH</option>
+            </select></label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col col-4">
+            <label>Year <input type="number" class="form-control" name="year" value="" max="4"></label>
+          </div>
+          <div class="col col-4">
+            <label >Sem <input type="number" class="form-control" name="sem" value="" max="8"></label>
+          </div>
+          <div class="col col-4">
+            <label>Mobile Number <input type="tel" class="form-control"  name="smob" class="form-control" value=""></label>
+          </div>
+        </div>
+        <legend>Parent Record</legend>
+        <div class="row ">
+          <div class="col col-4">
+            <label>Parent Name <input type="text"  class="form-control"  name="pname" class="form-control"value=""></label>
+          </div>
+          <div class="col col-4">
+            <label>Mobile Number <input type="tel" class="form-control"  name="mob" class="form-control" value=""></label>
+          </div>
+          <div class="col col-4">
+            <label>Email <input type="email" class="form-control"  name="email" value=""></label>
+          </div>
+        </div>
+        <div class="row ">
+          <div class="col col-4">
+            <label>Address <textarea name="Add"  class="form-control" ></textarea></label>
+          </div>
+          <div class="col col-4 offset-4">
+            <label>Password <input type="password" class="form-control"  name="pass" value=""></label>
+          </div>
+        </div>
+      </div>
+      </fieldset>
+      <center>
+        <button type="Submit"  class="btn btn-success" id="ast1" name="type" value="Insert Record">Insert Record</button>
+      </center>
+    </form>
+  </div>
+
+  {{success|safe}}
+  {{er}}
+
+  {%if sus%}
+  <div class="container">
+    <fieldset >
+      <legend> Student Information</legend>
+  <div class="row ">
+    <div class="col col-6">
+      Name
+    </div>
+    <div class="col col-6">
+      {{sname}}
+    </div>
+    <div class="col col-6">
+      USN
+    </div>
+    <div class="col col-6">
+      {{usn}}
+    </div>
+    <div class="col col-6">
+      Sem
+    </div>
+    <div class="col col-6">
+      {{sem}}
+    </div>
+    <div class="col col-6">
+      email
+    </div>
+    <div class="col col-6">
+      {{email}}
+    </div>
+    <div class="col col-6">
+      Student Phone
+    </div>
+    <div class="col col-6">
+      {{sphone}}
+    </div>
+  </div>
+</fieldset>
+<fieldset>
+  <legend>Parent Information</legend>
+    <div class="row">
+      <div class="col col-6">
+        Parent name
+      </div>
+      <div class="col col-6">
+        {{pname}}
+      </div>
+      <div class="col col-6">
+        Parent Phone Number
+      </div>
+      <div class="col col-6">
+        {{pphone}}
+      </div>
+      <div class="col col-6">
+        Parent Email
+      </div>
+      <div class="col col-6">
+        {{pemail}}
+      </div>
+      <div class="col col-6">
+         Address
+      </div>
+      <div class="col col-6">
+        {{padd}}
+      </div>
+    </fieldset>
+  </div>
+
+</div>
+<nav aria-label="breadcrumb">
+ <ol class="breadcrumb">
+   <li class="breadcrumb-item"><a  onclick="document.getElementById('ia').style.display='block' " href="#">Add IA</a></li>
+   <li class="breadcrumb-item"><a href="#">Library</a></li>
+ </ol>
+</nav>
+<div id="ia" class="container">
+
+  <form class="form-group" action="iamarks" method="post">
+    {% csrf_token %}
+    <input type="hidden" name="usn" value="{{usn}}">
+  <label>IA <select class="form-control" name="ia">
+    <option>select</option>
+    <option onclick="document.getElementById('max_ia').style.display='block'">IA 1</option>
+    <option>IA 2</option>
+    <option>IA 3</option>
+  </select> </label>
+  <label>Subject Code <input type="text" name="subcode" class="form-control" value=""> </label>
+  <label>Marks Gained <input type="number" name="mgain" class="form-control"  value=""> </label>
+
+    <label>Maximum IA <input type="number"  name="mIA" class="form-control"  value="30"> </label>
+    <div id="marksIA">
+
+    </div>
+    <button type="button"onclick="addia()" class="btn btn-success btn-sm">+</button>
+  </form>
+</div>
+  {%endif%}
+  {%if error%}
+  {{result|safe}}
+  {% endif %}
+
+  {% if rest %}
+    <div class="container">
+      <div class="card">
+        <ul class="list-group list-group-flush">
+
+          {% for list in results %}
+            <li class="list-group-item"> {{list.0}} {{list.1}}</li>
+          {% endfor %}
+        </ul>
+
+      </div>
+    </div>
+  {% endif %}
+  {% if subshow %}
+
+  {% endif %}
+    <script src="static/bootstrap/js/jquery-3.5.1.min.js" ></script>
+    <script src="static/bootstrap/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
